@@ -8,11 +8,13 @@ if [ "$1" == "-h" ]; then echo "Usage: `basename $0` [Install LDAP Server. Scrip
 #Yum installs required
 yum -y install openldap-servers openldap-clients >> ldap-server.log
 #Wget needed database files for ldap from a hosted apache server.
-wget -O /etc/openldap/db.ldif https://raw.githubusercontent.com/Thomaso54/Group3Project2/master/db.ldif
+#wget -O /etc/openldap/db.ldif https://raw.githubusercontent.com/Thomaso54/Group3Project2/master/db.ldif
 wget -O /etc/openldap/base.ldif https://raw.githubusercontent.com/Thomaso54/Group3Project2/master/base.ldif
 #Set hashed password for Root
 hash=$(slappasswd -s RootGroup3 -n) >> ldap-server.log
 sed -i "s/olcRootPW:/olcRootPW: $hash/g" /etc/openldap/db.ldif >> ldap-server.log
+echo "olcAccess: {0}to attrs=userPassword, by self write by anonymous auth by * none" >> /etc/openldap/slapd.d/cn=config/olcDatabase={2}hdb.ldif
+    echo "olcAccess: {1} to * by self write by * read" >> /etc/openldap/slapd.d/cn=config/olcDatabase={2}hdb.ldif
 #Enable slapd and start it
 systemctl enable slapd.service && systemctl start slapd >> ldap-server.log
 #Set firewall rules
@@ -25,8 +27,8 @@ ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/cosine.ldif >> ldap-ser
 ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/nis.ldif >> ldap-server.log
 ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/inetorgperson.ldif >> ldap-server.log
 #Import the domains information to olcDatabase{2} using ldapmodify for no CRC errors
-ldapmodify -Q -Y EXTERNAL -H ldapi:/// -f /etc/openldap/db.ldif >> ldap-server.log
-ldapadd -x -w RootGroup3 -D cn=Manager,dc=cit470,dc=nku,dc=edu -H ldap:/// -f /etc/openldap/base.ldif >> ldap-server.log
+#ldapmodify -Q -Y EXTERNAL -H ldapi:/// -f /etc/openldap/db.ldif >> ldap-server.log
+#ldapadd -x -w CIT470 -D cn=Manager,dc=cit470,dc=nku,dc=edu -H ldap:/// -f /etc/openldap/base.ldif >> ldap-server.log
 #Restart slapd.service to enfore the changes
 systemctl restart slapd >> ldap-server.log
 #Get diradm
