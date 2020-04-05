@@ -8,10 +8,10 @@ if [ "$1" == "-h" ]; then echo "Usage: `basename $0` [Install LDAP Server. Scrip
 #Yum installs required
 yum -y install openldap-servers openldap-clients >> ldap-server.log
 #Wget needed database files for ldap from a hosted apache server.
-wget -O /etc/openldap/db.ldif http://studenthome/~turing1/db.ldif >> ldap-server.log
-wget -O /etc/openldap/base.ldif http://studenthome/~turing1/base.ldif >> ldap-server.log
+wget -O /etc/openldap/db.ldif https://raw.githubusercontent.com/Thomaso54/Group3Project2/master/db.ldif
+wget -O /etc/openldap/base.ldif https://raw.githubusercontent.com/Thomaso54/Group3Project2/master/base.ldif
 #Set hashed password for Root
-hash=$(slappasswd -s CIT470 -n) >> ldap-server.log
+hash=$(slappasswd -s RootGroup3 -n) >> ldap-server.log
 sed -i "s/olcRootPW:/olcRootPW: $hash/g" /etc/openldap/db.ldif >> ldap-server.log
 #Enable slapd and start it
 systemctl enable slapd.service && systemctl start slapd >> ldap-server.log
