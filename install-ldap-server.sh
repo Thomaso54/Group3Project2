@@ -31,7 +31,7 @@ ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/nis.ldif >> ldap-server
 ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/inetorgperson.ldif >> ldap-server.log
 #Import the domains information to olcDatabase{2} using ldapmodify for no CRC errors
 #ldapmodify -Q -Y EXTERNAL -H ldapi:/// -f /etc/openldap/db.ldif >> ldap-server.log
-#ldapadd -x -w RootGroup3 -D cn=Manager,dc=cit470,dc=nku,dc=edu -H ldap:/// -f /etc/openldap/base.ldif >> ldap-server.log
+ldapadd -x -w RootGroup3 -D cn=Manager,dc=cit470,dc=nku,dc=edu -H ldap:/// -f /etc/openldap/base.ldif >> ldap-server.log
 #Restart slapd.service to enfore the changes
 systemctl restart slapd >> ldap-server.log
 #Get diradm
