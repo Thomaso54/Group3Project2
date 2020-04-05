@@ -1,0 +1,19 @@
+dn: olcDatabase={2}.hdb
+objectClass: olcDatabaseConfig
+objectClass: olcHdbConfig
+olcAccess: {0}to attrs=userPassword, by self write by anonymous auth by * non
+olcAccess: {1} to * by self write by * read
+oldDatabase: {2}hdb
+olcDbDirectory: /var/lib/ldap
+oldSuffix: dc=cit470,dc=nku,dc=edu
+olcRootDN: cn=Manager,dc=cit470,dc=nku,dc=edu
+olcRootPW: student
+olcDbIndex: objectClass eq,pres
+olcDbINdex: ou,cn,mail,surname,givename eq,pres,sub
+structuralObjectClass: olcHdbConfig
+entryUUID: e88a55b8-e69f-1039-8119-89eb4e5baf81
+creatorsName: cn=config
+createTimestamp: 20200218134002Z
+entryCSN: 20200218134002.207593Z#000000#000#000000
+modifiersName: cn=config
+modifyTimestamp: 20200218134002Z
