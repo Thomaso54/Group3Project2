@@ -1,0 +1,14 @@
+dn: dc=cit470,dc=nku,dc=edu
+dc: cit470
+objectClass: top
+objectClass: domain
+
+dn: ou=People,dc=cit470,dc=nku,dc=edu
+ou: People
+objectClass: top
+objectClass: organizationalUnit
+
+dn: ou=Group,dc=cit470,dc=nku,dc=edu
+ou: Group
+objectClass: top
+objectClass: organizationalUnit
