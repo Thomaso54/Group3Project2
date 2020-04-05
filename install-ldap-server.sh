@@ -15,7 +15,7 @@ wget -O /etc/openldap/base.ldif https://raw.githubusercontent.com/Thomaso54/Grou
 #sed -i "s/olcRootPW:/olcRootPW: $hash/g" /etc/openldap/db.ldif >> ldap-server.log
 hash=$(slappasswd -s RootGroup3 -n) >> ldap-server.log
 #sed -i "s/olcRootPW:/olcRootPW: $hash/g" /etc/openldap/slapd.d/cn=config/olcDatabase={2}hdb.ldif >> ldap-server.log
-echo "olcRootPW: " && slappasswd -s RootGroup3 >> /etc/openldap/slapd.d/cn=config/olcDatabase={2}hdb.ldif
+echo "olcRootPW: $(slappasswd -s RootGroup3)" >> /etc/openldap/slapd.d/cn=config/olcDatabase={2}hdb.ldif
 echo "olcAccess: {0}to attrs=userPassword, by self write by anonymous auth by * none" >> /etc/openldap/slapd.d/cn=config/olcDatabase={2}hdb.ldif
 echo "olcAccess: {1} to * by self write by * read" >> /etc/openldap/slapd.d/cn=config/olcDatabase={2}hdb.ldif
 #Enable slapd and start it
