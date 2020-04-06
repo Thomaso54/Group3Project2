@@ -55,11 +55,11 @@ wget -O /usr/share/migrationtools/migrate_common.ph https://raw.githubuserconten
 #TRY COMMENTS BELOW AFTER TESTING
 #assuming extracting a2.tar.bz2 will leave files directly in /root/fileNames
 #cp -rf /root/migrate_common.ph /usr/share/migrationtools/migrate_common.ph
-slapadd -v -l /etc/openldap/base.ldif
-./usr/share/migrationtools/migrate_passwd.pl /etc/passwd > /usr/share/migrationtools/passwd.ldif
-slapadd -v -l /usr/share/migrationtools/passwd.ldif
-./usr/share/migrationtools/migrate_group.pl /etc/group > /usr/share/migrationtools/group.ldif
-slapadd -v -l /usr/share/migrationtools/group.ldif
+slapadd -v -l /etc/openldap/base.ldif | tee -a ldap-server.log
+./usr/share/migrationtools/migrate_passwd.pl /etc/passwd | tee /usr/share/migrationtools/passwd.ldif | tee -a ldap-server.log
+slapadd -v -l /usr/share/migrationtools/passwd.ldif | tee -a ldap-server.log
+./usr/share/migrationtools/migrate_group.pl /etc/group | tee /usr/share/migrationtools/group.ldif | tee -a ldap-server.log
+slapadd -v -l /usr/share/migrationtools/group.ldif | tee -a ldap-server.log
 chown -R ldap.ldap /var/lib/ldap
 #*******************END NEW LINES************************
 
