@@ -1,0 +1,52 @@
+#!/usr/bin/bash
+
+#NFS Install Script
+#CIT-470 Advanced Network & System Administration
+#Spring 2020
+#Group 3 Project 2
+#Kevin Irwin, Garrett Turin, Thomas Ryan
+
+#Arguments for the command line
+arg1=$1
+arg2=$2
+
+#Log the output
+LOGFILE=/var/log/nfs-install
+function echo_and_log {
+    echo $1
+    echo $1 >> $LOGFILE 2>&1
+}
+
+#Run the scripts for each step 
+function run_install {
+    subnet=$1
+
+    echo_and_log "Creating the new partition"
+    ./scripts/create_partition >> $LOGFILE 2>&1
+    echo_and_log "Partition created"
+
+    echo_and_log "Installing and configuring NFS"
+    ./scripts/install_and_configure_nfs $subnet >> $LOGFILE 2>&1
+    echo_and_log "NFS configured"
+
+    echo_and_log "Poking holes in the firewall for NFS"
+    ./scripts/firewall_for_nfs >> $LOGFILE 2>&1
+    echo_and_log "Try it now!"
+}
+
+#Define arguments
+case $arg1 in
+        -ip | --ip_range)
+            run_install $arg2
+            exit
+            ;;
+        -h | --help)
+            less ./files/nfs_help
+            exit
+            ;;
+        *)
+            less ./files/nfs_help
+        exit 1
+            ;;
+esac
+
