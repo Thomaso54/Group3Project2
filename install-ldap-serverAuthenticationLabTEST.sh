@@ -16,6 +16,8 @@ wget -O /etc/openldap/base.ldif https://raw.githubusercontent.com/Thomaso54/Grou
 #Set hashed password for Root
 #hash=$(slappasswd -s RootGroup3 -n) >> ldap-server.log
 #sed -i "s/olcRootPW:/olcRootPW: $hash/g" /etc/openldap/db.ldif >> ldap-server.log
+sed -i '/olcSuffix: dc=my-domain,dc=com/c\olcSuffix: dc=cit470,dc=nku,dc=edu' /etc/openldap/slapd.d/cn=config/olcDatabase={2}hdb.ldif >> ldap-server.log
+sed -i '/olcRootDN: cn=Manager,dc=my-domain,dc=com/c\olcRootDN: cn=Manager, dc=cit470,dc=nku,dc=edu' /etc/openldap/slapd.d/cn=config/olcDatabase={2}hdb.ldif >> logfile
 hash=$(slappasswd -s RootGroup3 -n) >> ldap-server.log
 #sed -i "s/olcRootPW:/olcRootPW: $hash/g" /etc/openldap/slapd.d/cn=config/olcDatabase={2}hdb.ldif >> ldap-server.log
 echo "olcRootPW: $(slappasswd -s RootGroup3)" >> /etc/openldap/slapd.d/cn=config/olcDatabase={2}hdb.ldif
