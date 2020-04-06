@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+
+/usr/bin/cp -ipr /home /tmp/old_home
+/usr/sbin/parted -s -a optimal /dev/sda -- mkpart primary ext3 10.0GB 100%
+/usr/sbin/mkfs.xfs /dev/sda4
+/usr/sbin/xfs_repair /dev/sda4
+/usr/bin/echo '/dev/sda4 /home xfs defaults 0 0' >> /etc/fstab
+/usr/bin/mount /dev/sda4
+/usr/bin/cp -ipr /tmp/old_home/* /home

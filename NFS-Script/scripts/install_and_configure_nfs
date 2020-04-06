@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+
+subnet=$1
+
+/usr/bin/echo "/home $subnet(rw)" >> /etc/exports
+/usr/bin/yum install -y nfs-utils
+/usr/sbin/exportfs -a
+/usr/bin/systemctl start nfs
+/usr/bin/systemctl enable nfs
+
